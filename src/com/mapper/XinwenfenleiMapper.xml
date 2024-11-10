@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.XinwenfenleiMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Xinwenfenlei">
+    <id column="id" jdbcType="INTEGER" property="id" />
+	<result column="fenlei" jdbcType="VARCHAR" property="fenlei" />    
+    <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fenlei, addtime
+  </sql>
+  <select id="quchongXinwenfenlei"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from xinwenfenlei 
+    where fenlei = #{fenlei,jdbcType=VARCHAR} limit 0,1
+  </select>
+ <select id="getCount"   resultType="int" parameterType="java.util.Map" >
+    select  count(*) from xinwenfenlei  where 1=1
+    <if test="fenlei!=null">and fenlei like  concat('%',#{fenlei,jdbcType=VARCHAR},'%')</if>     
+  </select> 
+  <select id="getAll"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from xinwenfenlei  where 1=1
+    <if test="fenlei!=null">
+    and fenlei =#{fenlei}
+    </if>
+  </select>
+  
+  <select id="getsyxinwenfenlei1"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from xinwenfenlei  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyxinwenfenlei2"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from xinwenfenlei  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyxinwenfenlei3"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from xinwenfenlei  where 1=1
+    limit 0,5
+  </select>
+  
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select  <include refid="Base_Column_List" /> 
+     from xinwenfenlei where 1=1 
+     <if test="fenlei!=null">and fenlei like  concat('%',#{fenlei,jdbcType=VARCHAR},'%')</if>     
+	 order by id desc
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+	 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xinwenfenlei
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xinwenfenlei
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Xinwenfenlei">
+    insert into xinwenfenlei (id, fenlei, addtime)
+    values (#{id,jdbcType=INTEGER}, #{fenlei,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Xinwenfenlei">
+    insert into xinwenfenlei
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fenlei != null"> fenlei, </if>      
+      <if test="addtime != null">
+        addtime,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fenlei != null"> #{fenlei,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Xinwenfenlei">
+    update xinwenfenlei
+    <set>
+	  <if test="fenlei != null"> fenlei = #{fenlei,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.entity.Xinwenfenlei">
+    update xinwenfenlei
+    set fenlei = #{fenlei,jdbcType=VARCHAR},  addtime = #{addtime,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
